@@ -14,9 +14,9 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("select * from Contacts where (firstName like ? OR lastName like ?)and UserID=?");
+		$stmt = $conn->prepare("select * from User_Contacts where (FirstName like ? OR LastName like ?)and UserID=?");
 		$colorName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("sss", $colorName,$colorName, $inData["userId"]);
+		$stmt->bind_param("sss", $colorName,$colorName, $inData["UserID"]);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
@@ -29,7 +29,7 @@
 			}
 			$searchCount++;
 			//returns JSON objects instead of array of strings
-			$searchResults .= '{"firstName" : "'. $row["firstName"]. '", "lastName" : "'. $row["lastName"]. '"}';
+			$searchResults .= '{"FirstName" : "'. $row["FirstName"]. '", "LastName" : "'. $row["LastName"]. '"}';
 		}
 		
 		if( $searchCount == 0 )
@@ -58,7 +58,7 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"ID":0,"FirstName":"","LastName":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	

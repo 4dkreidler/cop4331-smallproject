@@ -14,7 +14,7 @@
     }
     else
     {
-		$stmt = $conn->prepare("UPDATE Contacts SET firstName = ?, lastName = ? WHERE id = ? "); //Names must correspond to database so maybe change later
+		$stmt = $conn->prepare("UPDATE User_Contacts SET FirstName = ?, LastName = ? WHERE ID = ? "); 
         $stmt = bind_param("ssi", $newFirstName, $newLastName, $id);
         $stmt -> execute(); 
         $stmt -> close();

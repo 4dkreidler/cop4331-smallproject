@@ -1,20 +1,20 @@
 <?php
     $inData = getRequestInfo(); 
 
-    $userId =   $inData["userId"];
-    $firstName = $inData["firstName"];
-    $lastName = $inData["lastName"]; 
+    $userId =   $inData["UserID"];
+    $firstName = $inData["FirstName"];
+    $lastName = $inData["LastName"]; 
 
     //connects to database
-    $conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB"); //placeholders for database user *REMEMBER TO CHANGE LATER*
-    
+    $conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB"); 
+
     if( $conn -> connect_error)
     {
             returnWithError( $conn -> connect_error); 
     }
     else
     {
-		$stmt = $conn->prepare("DELETE FROM Contacts WHERE userId = ? AND firstName = ? AND lastName = ?"); //Names must correspond to database so maybe change later
+		$stmt = $conn->prepare("DELETE FROM User_Contacts WHERE UserID = ? AND FirstName = ? AND LastName = ?");
         $stmt = bind_param("iss", $userId, $firstName, $lastName);
         $stmt -> execute(); 
         $stmt -> close();
