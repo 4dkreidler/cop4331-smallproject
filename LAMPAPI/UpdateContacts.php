@@ -15,11 +15,11 @@
     else
     {
 		$stmt = $conn->prepare("UPDATE User_Contacts SET FirstName = ?, LastName = ? WHERE ID = ? "); 
-        $stmt = bind_param("ssi", $newFirstName, $newLastName, $id);
-        $stmt -> execute(); 
+        $stmt -> bind_param("ssi", $newFirstName, $newLastName, $id);
+        $stmt -> execute();         
         $stmt -> close();
         $conn -> close(); 
-        returnWithError(""); 
+        returnWithError("");
     }
 
     function getRequestInfo()
