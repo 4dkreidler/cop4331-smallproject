@@ -5,7 +5,8 @@
     $firstName = $inData["firstName"];
     $lastName = $inData["lastName"]; 
 
-    $conn = new mysqli("localhost", "username", "password", "database"); //placeholders for database user *REMEMBER TO CHANGE LATER*
+    //connects to database
+    $conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB"); //placeholders for database user *REMEMBER TO CHANGE LATER*
     
     if( $conn -> connect_error)
     {

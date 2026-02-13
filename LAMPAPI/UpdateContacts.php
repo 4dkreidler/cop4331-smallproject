@@ -5,8 +5,9 @@
     $newLastName = $inData["newLastName"]; 
     $id = $inData["id"]; 
 
-    $conn = new mysqli("localhost", "username", "password", "database"); //placeholders for database user *REMEMBER TO CHANGE LATER*
-    
+    //connects to database
+    $conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB"); 
+
     if( $conn -> connect_error)
     {
             returnWithError( $conn -> connect_error); 
