@@ -3,13 +3,14 @@ header("Content-Type: application/json; charset=UTF-8");
 
 $inData = json_decode(file_get_contents('php://input'), true);
 
-$login    = $inData["login"];
-$password = $inData["password"];
+$Login    = $inData["Login"];
+$Password = $inData["Password"];
 
-include 'db.php';
+$conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB"); 
+if( $conn -> connect_error) {returnWithError( $conn -> connect_error);}
 
-$stmt = $conn->prepare("SELECT id, firstName, lastName FROM Users WHERE login=? AND password=?");
-$stmt->bind_param("ss", $login, $password);
+$stmt = $conn->prepare("SELECT ID, FirstName, LastName FROM Users WHERE Login=? AND Password=?");
+$stmt->bind_param("ss", $Login, $Password);
 $stmt->execute();
 
 $result = $stmt->get_result();
@@ -18,9 +19,9 @@ $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
     echo json_encode([
         "status" => "success",
-        "id" => $row["id"],
-        "firstName" => $row["firstName"],
-        "lastName" => $row["lastName"]
+        "ID" => $row["ID"],
+        "FirstName" => $row["FirstName"],
+        "LastName" => $row["LastName"]
     ]);
 } else {
     echo json_encode(["status" => "error", "message" => "Invalid login"]);
