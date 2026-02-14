@@ -13,15 +13,25 @@ $UserID     = $inData["UserID"];
 $conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB"); 
 if( $conn -> connect_error) {returnWithError( $conn -> connect_error);}
 
-$check = $conn->prepare(
+$userCheck = $conn->prepare("SELECT ID FROM Users WHERE ID = ?");
+$userCheck->bind_param("i", $UserID);
+$userCheck->execute();
+$userCheck->store_result();
+
+if ($userCheck->num_rows == 0) {
+    echo json_encode(["status" => "error", "message" => "Invalid UserID"]);
+    exit();
+}
+
+$dupeCheck = $conn->prepare(
     "SELECT ID FROM User_Contacts 
      WHERE FirstName = ? AND LastName = ? AND Phone = ? AND Email = ? AND UserID = ?"
 );
-$check->bind_param("ssssi", $FirstName, $LastName, $Phone, $Email, $UserID);
-$check->execute();
-$check->store_result();
+$dupeCheck->bind_param("ssssi", $FirstName, $LastName, $Phone, $Email, $UserID);
+$dupeCheck->execute();
+$dupeCheck->store_result();
 
-if ($check->num_rows > 0) {
+if ($dupeCheck->num_rows > 0) {
     echo json_encode(["status" => "error", "message" => "Contact already exists"]);
     exit();
 }
