@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
     loginForm.addEventListener("submit", function (e) {
         e.preventDefault(); // prevent default form submission
 
-        const login = document.getElementById("login").value;
-        const password = document.getElementById("password").value;
+        const login = document.getElementById("login").value.trim();
+        const password = document.getElementById("password").value.trim();
 
         fetch("http://whateverwhateverwhatever.xyz/LAMPAPI/Login.php", {
             method: "POST",
@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     registerButton.addEventListener("click", function() {
-      const login = document.getElementById("login").value;
-      const password = document.getElementById("password").value;
-      const firstName = document.getElementById("firstName").value;
-      const lastName = document.getElementById("lastName").value;
+      const login = document.getElementById("login").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
       
       if(!login || !password){
         showError("Please enter an username and password to register.");
@@ -99,3 +99,4 @@ document.addEventListener("DOMContentLoaded", function () {
         errorDiv.textContent = message;
     }
 });
+
