@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const login = document.getElementById("login").value;
         const password = document.getElementById("password").value;
 
-        fetch("../api/Login.php", {
+        fetch("http://whateverwhateverwhatever.xyz/LAMPAPI/Login.php", {
             method: "POST",
             body: JSON.stringify({
                 Login: login,
@@ -34,9 +34,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("Redirecting to dashboard...");
 
                 // Redirect to dashboard
-                window.location.href = "/ContactManager/public/dashboard.html";
+                window.location.href = "dashboard.html";
             } else {
                 showError(data.message || "Invalid login");
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            showError("Error connecting to server");
+        });
+    });
+    
+    registerButton.addEventListener("click", function() {
+      const login = document.getElementById("login").value;
+      const password = document.getElementById("password").value;
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      
+      if(!login || !password){
+        showError("Please enter an username and password to register.");
+        return;
+      }
+      
+      if(!firstName || !lastName){
+        showError("Please enter your first and last names to register.");
+        return;
+      }
+      
+      fetch("http://whateverwhateverwhatever.xyz/LAMPAPI/Register.php", {
+            method: "POST",
+            body: JSON.stringify({
+                Login: login,
+                Password: password,
+                FirstName: firstName,
+                LastName: lastName
+            }),
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                // Save user info for the dashboard
+                showError("Registration successful.");
+            } else {
+                showError(data.message || "Registration failed.");
             }
         })
         .catch(error => {
