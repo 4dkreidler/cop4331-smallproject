@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.status === "success") {
                 // Save user info for the dashboard
+                localStorage.setItem("userId", data.ID);
                 localStorage.setItem("FirstName", data.FirstName);
                 localStorage.setItem("LastName", data.LastName);
 
@@ -44,6 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
             showError("Error connecting to server");
         });
     });
+
+});
     
     registerButton.addEventListener("click", function() {
       const login = document.getElementById("login").value.trim();
@@ -98,5 +101,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         errorDiv.textContent = message;
     }
-});
+    
 
