@@ -1,1 +1,2 @@
 # cop4331-smallproject
+The contact manager application allows users to register accounts which will allow them to individually save, edit, delete, and search contacts they input. It uses GitHub for version control, DigitalOcean for app hosting, GoDaddy for domain hosting, and MySQL for database implementations. The application can be accessed by going to whateverwhateverwhatever.xyz/public/index.html and creating an account. Some browsers such as Opera GX or Mozilla Firefox cannot run it, but it can be viewed on Google Chrome and Microsoft Edge with no isses.
