@@ -1,41 +1,33 @@
 <?php
-    $inData = getRequestInfo(); 
+header("Content-Type: application/json; charset=UTF-8");
 
-    $userId =   $inData["UserID"];
-    $firstName = $inData["FirstName"];
-    $lastName = $inData["LastName"]; 
+// Get JSON input
+$inData = json_decode(file_get_contents('php://input'), true);
+$ID = $inData["ID"] ?? 0;
 
-    //connects to database
-    $conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB"); 
+// Connect to database
+$conn = new mysqli("localhost", "DBuser", "passwordpassword", "CONTACTS_DB");
 
-    if( $conn -> connect_error)
-    {
-            returnWithError( $conn -> connect_error); 
-    }
-    else
-    {
-		$stmt = $conn->prepare("DELETE FROM User_Contacts WHERE UserID = ? AND FirstName = ? AND LastName = ?");
-        $stmt -> bind_param("iss", $userId, $firstName, $lastName);
-        $stmt -> execute(); 
-        $stmt -> close();
-        $conn -> close(); 
-        returnWithError(""); 
-    }
+if ($conn->connect_error) {
+    echo json_encode(["status" => "error"]);
+    exit();
+}
 
-    function getRequestInfo()
-    {
-        return json_decode(file_get_contents('php://input'),true);
-    }
+// Prepare delete statement
+$stmt = $conn->prepare("DELETE FROM User_Contacts WHERE ID=?");
+$stmt->bind_param("i", $ID);
+$stmt->execute();
 
-    function sendResultInfoAsJson( $obj)
-    {
-        header('Content-type: application/json');
-        echo $obj; 
-    }
+// Check if something was deleted
+if($stmt->affected_rows > 0)
+{
+    echo json_encode(["status" => "success"]);
+}
+else
+{
+    echo json_encode(["status" => "error"]);
+}
 
-    function returnWithError($err)
-    {
-		$retValue = '{"error":"' . $err . '"}';
-        sendResultInfoAsJson($retValue); 
-    }
+$stmt->close();
+$conn->close();
 ?>
